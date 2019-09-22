@@ -17,9 +17,9 @@ class Categoria:
     def __init__(self, nombre, recargo):
         self.nombre = nombre
         self.recargo = recargo
-        self.tiene_recargo = self.activar_recargo()
+        self.tiene_recargo = self._activar_recargo()
 
-    def activar_recargo(self):
+    def _activar_recargo(self):
         '''Inicializa el booleano tiene_recargo'''
         return self.recargo != 0.0
 
@@ -28,7 +28,7 @@ class Categoria:
 
 class Envio:
     '''Paquete enviado por le cliente'''
-    def __init__(self, origen, destino, peso, precio_base):
+    def __init__(self, origen : Lugar, destino : Lugar, peso, precio_base):
         self.origen = origen
         self.destino = destino
         self.peso = peso
@@ -38,3 +38,9 @@ class Envio:
 
     def __repr__(self):
         return f'{self.origen}\t{self.destino}\t{self.peso}\t${self.precio_base}\t{self.fecha}'
+
+    def soy_internacional(self):
+        if self.origen.pais != self.destino.pais
+class Fabrica_envio:
+    '''Permite crear un nuevo envío de forma interactiva'''
+    pass
