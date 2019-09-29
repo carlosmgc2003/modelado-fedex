@@ -1,9 +1,13 @@
 import fedex
+
+
 class App:
     def __init__(self):
         self.envios = []
         self.lugares_existentes = []
         self.categorias_existentes = []
+        self.opcion_seleccionada = None
+        self.interactividad()
 
     def mostar_menu(self):
         '''Metodo dummi que solo imprime menu TODO: Implementarlo de forma mas pitónica'''
@@ -19,24 +23,35 @@ class App:
 
     def interactividad(self):
         self.mostar_menu()
-        self.opcion_seleccionada = input()
+        self.opcion_seleccionada = int(input())
         while self.opcion_seleccionada in range(7):
             if self.opcion_seleccionada == 1:
-                self.envios.append(fedex.Fabrica_envio(self.lugares_existentes, self.categorias_existentes))
-            elif self.opcion_seleccionada == 2: self.listar_envios()
-            elif self.opcion_seleccionada == 3: self.borrar_envios()
-            elif self.opcion_seleccionada == 4: self.listar_envios_internacionales()
-            elif self.opcion_seleccionada == 5: self.conocer_precio_envio()
-            elif self.opcion_seleccionada == 6: self.conocer_propicio_a_perderse()
-            elif self.opcion_seleccionada == 0: break
-            else: print('Error, opcion incorrecta intente nuevamente [0-6]')
-
-
-
+                fabrica = fedex.Fabrica_envio(self.lugares_existentes, self.categorias_existentes)
+                nuevo_envio = fabrica.iniciar_fabricacion()
+                self.envios.append(nuevo_envio)
+                self.categorias_existentes.append(nuevo_envio.categorias)
+                self.lugares_existentes.append(nuevo_envio.origen)
+                self.lugares_existentes.append(nuevo_envio.destino)
+            elif self.opcion_seleccionada == 2:
+                self.listar_envios()
+            elif self.opcion_seleccionada == 3:
+                self.borrar_envios()
+            elif self.opcion_seleccionada == 4:
+                self.listar_envios_internacionales()
+            elif self.opcion_seleccionada == 5:
+                self.conocer_precio_envio()
+            elif self.opcion_seleccionada == 6:
+                self.conocer_propicio_a_perderse()
+            elif self.opcion_seleccionada == 0:
+                break
+            else:
+                print('Error, opcion incorrecta intente nuevamente [0-6]')
+            self.mostar_menu()
+            self.opcion_seleccionada = int(input())
 
     def listar_envios(self):
         '''Imprime en pantalla todos los envios creados en el sistema'''
-        for nro, env in enumerate(envios):
+        for nro, env in enumerate(self.envios):
             print(f'{nro}) {env}')
 
     def borrar_envios(self):
@@ -53,11 +68,9 @@ class App:
             print(f'{nro}) {env}')
 
     def conocer_precio_envio(self):
-    '''TODO: Implementar impuestos'''
+        '''TODO: Implementar impuestos'''
         pass
 
     def conocer_propicio_a_perderse(self):
-    '''TODO: Implementar propicio a perderse'''
+        '''TODO: Implementar propicio a perderse'''
         pass
-
-
